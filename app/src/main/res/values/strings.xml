@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Lesson1</string>
+    <string name="counter_1_text">Counter 1</string>
+    <string name="counter_2_text">Counter 2</string>
+    <string name="counter_3_text">Counter 3</string>
+    <string name="button_0">0</string>
 </resources>
