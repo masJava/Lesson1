@@ -1,14 +1,18 @@
 package com.mas.lesson1.ui.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.mas.lesson1.databinding.ActivityMainBinding
+import com.mas.lesson1.mvp.model.ModelCounters
 import com.mas.lesson1.mvp.presenter.PresenterCounter
 import com.mas.lesson1.mvp.view.ViewCounter
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 
-class MainActivity : AppCompatActivity(), ViewCounter {
+class MainActivity : MvpAppCompatActivity(), ViewCounter {
     private var vb: ActivityMainBinding? = null
-    private val presenter = PresenterCounter(this)
+    private val presenter by moxyPresenter {
+        PresenterCounter(ModelCounters())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +30,15 @@ class MainActivity : AppCompatActivity(), ViewCounter {
         }
     }
 
-    override fun setButtonText(index: Int, text: String) {
-        when (index) {
-            0 -> vb?.btn0?.text = text
-            1 -> vb?.btn1?.text = text
-            2 -> vb?.btn2?.text = text
-        }
+    override fun setButton0Text(text: String) {
+        vb?.btn0?.text = text
+    }
+
+    override fun setButton1Text(text: String) {
+        vb?.btn1?.text = text
+    }
+
+    override fun setButton2Text(text: String) {
+        vb?.btn2?.text = text
     }
 }

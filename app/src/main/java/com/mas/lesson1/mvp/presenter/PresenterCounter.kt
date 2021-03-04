@@ -2,22 +2,19 @@ package com.mas.lesson1.mvp.presenter
 
 import com.mas.lesson1.mvp.model.ModelCounters
 import com.mas.lesson1.mvp.view.ViewCounter
+import moxy.MvpPresenter
 
-class PresenterCounter(private val view: ViewCounter) {
-    private val model = ModelCounters()
+class PresenterCounter(private val model: ModelCounters) : MvpPresenter<ViewCounter>() {
 
     fun counter0Click() {
-        val index = 0
-        view.setButtonText(index, model.next(index).toString())
+        viewState.setButton0Text(model.next(0).toString())
     }
 
     fun counter1Click() {
-        val index = 1
-        view.setButtonText(index, model.next(index).toString())
+        viewState.setButton1Text(model.next(1).toString())
     }
 
     fun counter2Click() {
-        val index = 2
-        view.setButtonText(index, model.next(index).toString())
+        viewState.setButton2Text(model.next(2).toString())
     }
 }
