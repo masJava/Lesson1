@@ -40,8 +40,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        supportFragmentManager.fragments.forEach{
-            if (it is BackClickListener && it.backPressed()){
+        supportFragmentManager.fragments.forEach {
+            if (it is BackClickListener && it.backPressed()) {
                 return
             }
             presenter.backClick()

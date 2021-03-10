@@ -11,6 +11,7 @@ import com.mas.lesson1.mvp.view.UsersView
 import com.mas.lesson1.ui.App
 import com.mas.lesson1.ui.BackClickListener
 import com.mas.lesson1.ui.adapter.UsersRVAdapter
+import com.mas.lesson1.ui.navigation.AndroidScreens
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -21,7 +22,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackClickListener {
     }
 
     private val presenter by moxyPresenter {
-        UsersPresenter(GithubUsersRepo(), App.instance.router)
+        UsersPresenter(GithubUsersRepo(), App.instance.router, AndroidScreens())
     }
 
     private var vb: FragmentUsersBinding? = null

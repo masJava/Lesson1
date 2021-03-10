@@ -1,16 +1,20 @@
 package com.mas.lesson1.mvp.presenter
 
 import android.util.Log
-import android.widget.Toast
 import com.github.terrakok.cicerone.Router
 import com.mas.lesson1.mvp.model.GithubUsersRepo
 import com.mas.lesson1.mvp.model.entity.GithubUser
+import com.mas.lesson1.mvp.navigation.IScreens
 import com.mas.lesson1.mvp.presenter.list.IUsersListPresenter
 import com.mas.lesson1.mvp.view.UsersView
 import com.mas.lesson1.mvp.view.list.IUserItemView
 import moxy.MvpPresenter
 
-class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router: Router) : MvpPresenter<UsersView>() {
+class UsersPresenter(
+    private val usersRepo: GithubUsersRepo,
+    private val router: Router,
+    private val screens: IScreens
+) : MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUsersListPresenter {
         val users = mutableListOf<GithubUser>()
@@ -33,8 +37,8 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
 
         usersListPresenter.itemClickListener = { view ->
             val user = usersListPresenter.users[view.pos]
-            Log.d("my",user.login)
-            //router.navigateTo(screens.user(user))
+            Log.d("my", user.login)
+            router.navigateTo(screens.userInfo(user))
         }
     }
 
@@ -46,6 +50,7 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
 
     fun backClick(): Boolean {
         router.exit()
+        Log.d("my", "backUser")
         return true
     }
 
