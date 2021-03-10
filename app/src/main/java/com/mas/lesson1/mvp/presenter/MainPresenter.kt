@@ -1,38 +1,20 @@
 package com.mas.lesson1.mvp.presenter
 
-import com.mas.lesson1.mvp.model.GithubUsersRepo
-import com.mas.lesson1.mvp.model.entity.GithubUser
-import com.mas.lesson1.mvp.presenter.list.IUsersListPresenter
+import com.github.terrakok.cicerone.Router
+import com.mas.lesson1.mvp.navigation.IScreens
 import com.mas.lesson1.mvp.view.MainView
-import com.mas.lesson1.mvp.view.list.IUserItemView
 import moxy.MvpPresenter
 
-class MainPresenter(val usersRepo: GithubUsersRepo) : MvpPresenter<MainView>() {
-
-    class UsersListPresenter : IUsersListPresenter {
-        val users = mutableListOf<GithubUser>()
-        override var itemClickListener: ((IUserItemView) -> Unit)? = null
-
-        override fun bindView(view: IUserItemView) {
-            val user = users[view.pos]
-            view.setLogin(user.login)
-        }
-
-        override fun getCount() = users.size
-    }
-
-    val usersListPresenter = UsersListPresenter()
+class MainPresenter(private val router: Router, private val screen: IScreens) :
+    MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.init()
-        loadData()
+        router.replaceScreen(screen.users())
     }
 
-    private fun loadData() {
-        usersListPresenter.users.clear()
-        usersListPresenter.users.addAll(usersRepo.getUsers())
-        viewState.updateList()
+    fun backClick() {
+        router.exit()
     }
 
 }

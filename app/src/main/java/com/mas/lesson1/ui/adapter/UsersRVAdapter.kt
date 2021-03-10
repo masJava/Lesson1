@@ -7,7 +7,8 @@ import com.mas.lesson1.databinding.ItemUserBinding
 import com.mas.lesson1.mvp.presenter.list.IUsersListPresenter
 import com.mas.lesson1.mvp.view.list.IUserItemView
 
-class UsersRVAdapter(val presenter: IUsersListPresenter): RecyclerView.Adapter<UsersRVAdapter.ViewHolder>(){
+class UsersRVAdapter(val presenter: IUsersListPresenter) :
+    RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -25,7 +26,8 @@ class UsersRVAdapter(val presenter: IUsersListPresenter): RecyclerView.Adapter<U
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         presenter.bindView(holder.apply { pos = position })
 
-    inner class ViewHolder(val vb:ItemUserBinding): RecyclerView.ViewHolder(vb.root), IUserItemView{
+    inner class ViewHolder(val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
+        IUserItemView {
         override var pos = -1
 
         override fun setLogin(text: String) = with(vb) {
