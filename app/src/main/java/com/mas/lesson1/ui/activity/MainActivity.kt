@@ -1,17 +1,19 @@
 package com.mas.lesson1.ui.activity
 
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mas.lesson1.databinding.ActivityMainBinding
-import com.mas.lesson1.mvp.model.ModelCounters
-import com.mas.lesson1.mvp.presenter.PresenterCounter
-import com.mas.lesson1.mvp.view.ViewCounter
+import com.mas.lesson1.mvp.model.GithubUsersRepo
+import com.mas.lesson1.mvp.presenter.MainPresenter
+import com.mas.lesson1.mvp.view.MainView
+import com.mas.lesson1.ui.adapter.UsersRVAdapter
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 
-class MainActivity : MvpAppCompatActivity(), ViewCounter {
+class MainActivity : MvpAppCompatActivity(), MainView {
     private var vb: ActivityMainBinding? = null
     private val presenter by moxyPresenter {
-        PresenterCounter(ModelCounters())
+        MainPresenter(GithubUsersRepo())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,26 +21,16 @@ class MainActivity : MvpAppCompatActivity(), ViewCounter {
         vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb?.root)
 
-        vb?.btn0?.setOnClickListener {
-            presenter.counter0Click()
-        }
-        vb?.btn1?.setOnClickListener {
-            presenter.counter1Click()
-        }
-        vb?.btn2?.setOnClickListener {
-            presenter.counter2Click()
-        }
     }
 
-    override fun setButton0Text(text: String) {
-        vb?.btn0?.text = text
+    override fun init() {
+        vb?.rvUsers?.layoutManager = LinearLayoutManager(this)
+        vb?.rvUsers?.adapter = UsersRVAdapter(presenter.usersListPresenter)
     }
 
-    override fun setButton1Text(text: String) {
-        vb?.btn1?.text = text
+    override fun updateList() {
+        vb?.rvUsers?.adapter?.notifyDataSetChanged()
     }
 
-    override fun setButton2Text(text: String) {
-        vb?.btn2?.text = text
-    }
+
 }
