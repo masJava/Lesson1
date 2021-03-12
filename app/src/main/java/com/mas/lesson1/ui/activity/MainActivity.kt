@@ -1,36 +1,51 @@
 package com.mas.lesson1.ui.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.github.terrakok.cicerone.androidx.AppNavigator
+import com.mas.lesson1.R
 import com.mas.lesson1.databinding.ActivityMainBinding
-import com.mas.lesson1.mvp.presenter.PresenterCounter
-import com.mas.lesson1.mvp.view.ViewCounter
+import com.mas.lesson1.mvp.presenter.MainPresenter
+import com.mas.lesson1.mvp.view.MainView
+import com.mas.lesson1.ui.App
+import com.mas.lesson1.ui.BackClickListener
+import com.mas.lesson1.ui.adapter.UsersRVAdapter
+import com.mas.lesson1.ui.navigation.AndroidScreens
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 
-class MainActivity : AppCompatActivity(), ViewCounter {
+class MainActivity : MvpAppCompatActivity(), MainView {
+
+    private val navigator = AppNavigator(this, R.id.container)
     private var vb: ActivityMainBinding? = null
-    private val presenter = PresenterCounter(this)
+    private val presenter by moxyPresenter {
+        MainPresenter(App.instance.router, AndroidScreens())
+    }
+    private var adapter: UsersRVAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb?.root)
+    }
 
-        vb?.btn0?.setOnClickListener {
-            presenter.counter0Click()
-        }
-        vb?.btn1?.setOnClickListener {
-            presenter.counter1Click()
-        }
-        vb?.btn2?.setOnClickListener {
-            presenter.counter2Click()
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        App.instance.navigatorHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        App.instance.navigatorHolder.removeNavigator()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        supportFragmentManager.fragments.forEach {
+            if (it is BackClickListener && it.backPressed()) {
+                return
+            }
+            presenter.backClick()
         }
     }
 
-    override fun setButtonText(index: Int, text: String) {
-        when (index) {
-            0 -> vb?.btn0?.text = text
-            1 -> vb?.btn1?.text = text
-            2 -> vb?.btn2?.text = text
-        }
-    }
 }
