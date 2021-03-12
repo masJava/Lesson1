@@ -14,13 +14,17 @@ import moxy.ktx.moxyPresenter
 
 class UserInfoFragment : MvpAppCompatFragment(), UsersInfoView, BackClickListener {
 
-    lateinit var user: GithubUser
-
     companion object {
-        fun newInstance(user: GithubUser) = UserInfoFragment().also { it.user = user }
+        private const val USER_ARG = "user"
+        fun newInstance(user: GithubUser) = UserInfoFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(USER_ARG,user)
+            }
+        }
     }
 
     private val presenter by moxyPresenter {
+        val user = arguments?.getParcelable<GithubUser>(USER_ARG) as GithubUser
         UsersInfoPresenter(user, App.instance.router)
     }
 
