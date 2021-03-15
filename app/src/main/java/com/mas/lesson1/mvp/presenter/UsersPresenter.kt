@@ -44,7 +44,10 @@ class UsersPresenter(
 
     private fun loadData() {
         usersListPresenter.users.clear()
-        usersListPresenter.users.addAll(usersRepo.getUsers())
+        usersRepo.getUsers().subscribe(
+            { users -> apply { usersListPresenter.users.addAll(users) } },
+            { t -> Log.d("my", t.message.toString()) },
+            { Log.d("my", "Complete") })
         viewState.updateList()
     }
 

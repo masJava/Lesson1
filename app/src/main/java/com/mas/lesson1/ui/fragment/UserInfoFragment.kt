@@ -18,7 +18,7 @@ class UserInfoFragment : MvpAppCompatFragment(), UsersInfoView, BackClickListene
         private const val USER_ARG = "user"
         fun newInstance(user: GithubUser) = UserInfoFragment().apply {
             arguments = Bundle().apply {
-                putParcelable(USER_ARG,user)
+                putParcelable(USER_ARG, user)
             }
         }
     }
