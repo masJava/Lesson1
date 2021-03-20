@@ -5,24 +5,32 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mas.lesson1.databinding.FragmentUsersBinding
-import com.mas.lesson1.mvp.model.GithubUsersRepo
+import com.mas.lesson1.mvp.model.api.ApiHolder
 import com.mas.lesson1.mvp.presenter.UsersPresenter
+import com.mas.lesson1.mvp.repo.RetrofitGithubUsersRepo
 import com.mas.lesson1.mvp.view.UsersView
 import com.mas.lesson1.ui.App
-import com.mas.lesson1.ui.BackClickListener
+import com.mas.lesson1.ui.BackButtonListener
 import com.mas.lesson1.ui.adapter.UsersRVAdapter
+import com.mas.lesson1.ui.image.GlideImageLoader
 import com.mas.lesson1.ui.navigation.AndroidScreens
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UsersFragment : MvpAppCompatFragment(), UsersView, BackClickListener {
+class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     companion object {
         fun newInstance() = UsersFragment()
     }
 
     private val presenter by moxyPresenter {
-        UsersPresenter(GithubUsersRepo(), App.instance.router, AndroidScreens())
+        UsersPresenter(
+            AndroidSchedulers.mainThread(),
+            RetrofitGithubUsersRepo(ApiHolder.api),
+            App.instance.router,
+            AndroidScreens()
+        )
     }
 
     private var vb: FragmentUsersBinding? = null
@@ -43,7 +51,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackClickListener {
 
     override fun init() {
         vb?.rvUsers?.layoutManager = LinearLayoutManager(requireContext())
-        vb?.rvUsers?.adapter = UsersRVAdapter(presenter.usersListPresenter)
+        vb?.rvUsers?.adapter = UsersRVAdapter(presenter.usersListPresenter, GlideImageLoader())
     }
 
     override fun updateList() {

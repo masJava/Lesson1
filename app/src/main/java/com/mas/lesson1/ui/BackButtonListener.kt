@@ -1,5 +1,5 @@
 package com.mas.lesson1.ui
 
-interface BackClickListener {
+interface BackButtonListener {
     fun backPressed(): Boolean
 }

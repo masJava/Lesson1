@@ -2,12 +2,14 @@ package com.mas.lesson1.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.mas.lesson1.databinding.ItemUserBinding
+import com.mas.lesson1.mvp.model.image.IImageLoader
 import com.mas.lesson1.mvp.presenter.list.IUsersListPresenter
 import com.mas.lesson1.mvp.view.list.IUserItemView
 
-class UsersRVAdapter(val presenter: IUsersListPresenter) :
+class UsersRVAdapter(val presenter: IUsersListPresenter, val imageLoader: IImageLoader<ImageView>) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -32,6 +34,10 @@ class UsersRVAdapter(val presenter: IUsersListPresenter) :
 
         override fun setLogin(text: String) = with(vb) {
             tvLogin.text = text
+        }
+
+        override fun loadAvatar(url: String) = with(vb) {
+            imageLoader.load(url, ivAvatar)
         }
 
     }

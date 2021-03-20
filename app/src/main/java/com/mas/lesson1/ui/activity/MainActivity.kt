@@ -1,13 +1,14 @@
 package com.mas.lesson1.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.mas.lesson1.R
 import com.mas.lesson1.databinding.ActivityMainBinding
 import com.mas.lesson1.mvp.presenter.MainPresenter
 import com.mas.lesson1.mvp.view.MainView
 import com.mas.lesson1.ui.App
-import com.mas.lesson1.ui.BackClickListener
+import com.mas.lesson1.ui.BackButtonListener
 import com.mas.lesson1.ui.adapter.UsersRVAdapter
 import com.mas.lesson1.ui.navigation.AndroidScreens
 import moxy.MvpAppCompatActivity
@@ -40,11 +41,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {
-            if (it is BackClickListener && it.backPressed()) {
+            if (it is BackButtonListener && it.backPressed()) {
                 return
             }
-            presenter.backClick()
         }
+        presenter.backClick()
     }
 
 }

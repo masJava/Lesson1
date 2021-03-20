@@ -8,11 +8,11 @@ import com.mas.lesson1.mvp.model.entity.GithubUser
 import com.mas.lesson1.mvp.presenter.UsersInfoPresenter
 import com.mas.lesson1.mvp.view.UsersInfoView
 import com.mas.lesson1.ui.App
-import com.mas.lesson1.ui.BackClickListener
+import com.mas.lesson1.ui.BackButtonListener
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UserInfoFragment : MvpAppCompatFragment(), UsersInfoView, BackClickListener {
+class UserInfoFragment : MvpAppCompatFragment(), UsersInfoView, BackButtonListener {
 
     companion object {
         private const val USER_ARG = "user"

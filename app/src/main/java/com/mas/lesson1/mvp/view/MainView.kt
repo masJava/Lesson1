@@ -1,7 +1,8 @@
 package com.mas.lesson1.mvp.view
 
 import moxy.MvpView
-import moxy.viewstate.strategy.alias.AddToEndSingle
+import moxy.viewstate.strategy.AddToEndSingleStrategy
+import moxy.viewstate.strategy.StateStrategyType
 
-@AddToEndSingle
+@StateStrategyType(AddToEndSingleStrategy::class)
 interface MainView : MvpView
