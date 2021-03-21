@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mas.lesson1.databinding.FragmentUsersBinding
 import com.mas.lesson1.mvp.model.api.ApiHolder
 import com.mas.lesson1.mvp.presenter.UsersPresenter
-import com.mas.lesson1.mvp.repo.RetrofitGithubUsersRepo
+import com.mas.lesson1.mvp.repo.RetrofitGithubUsers
 import com.mas.lesson1.mvp.view.UsersView
 import com.mas.lesson1.ui.App
 import com.mas.lesson1.ui.BackButtonListener
@@ -27,7 +27,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val presenter by moxyPresenter {
         UsersPresenter(
             AndroidSchedulers.mainThread(),
-            RetrofitGithubUsersRepo(ApiHolder.api),
+            RetrofitGithubUsers(ApiHolder.api),
             App.instance.router,
             AndroidScreens()
         )

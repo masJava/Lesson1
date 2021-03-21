@@ -5,7 +5,7 @@ import com.github.terrakok.cicerone.Router
 import com.mas.lesson1.mvp.model.entity.GithubUser
 import com.mas.lesson1.mvp.navigation.IScreens
 import com.mas.lesson1.mvp.presenter.list.IUsersListPresenter
-import com.mas.lesson1.mvp.repo.IGithubUsersRepo
+import com.mas.lesson1.mvp.repo.IGithubUsers
 import com.mas.lesson1.mvp.view.UsersView
 import com.mas.lesson1.mvp.view.list.IUserItemView
 import io.reactivex.rxjava3.core.Scheduler
@@ -14,7 +14,7 @@ import moxy.MvpPresenter
 
 class UsersPresenter(
     private val uiScheduler: Scheduler,
-    private val usersRepo: IGithubUsersRepo,
+    private val users: IGithubUsers,
     private val router: Router,
     private val screens: IScreens
 ) : MvpPresenter<UsersView>() {
@@ -48,7 +48,7 @@ class UsersPresenter(
 
     private fun loadData() {
 
-        usersRepo.getUsers()
+        users.getUsers()
             .observeOn(uiScheduler)
             .subscribe(
                 { users ->

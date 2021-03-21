@@ -1,7 +1,6 @@
 package com.mas.lesson1.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.mas.lesson1.R
 import com.mas.lesson1.databinding.ActivityMainBinding
@@ -9,7 +8,6 @@ import com.mas.lesson1.mvp.presenter.MainPresenter
 import com.mas.lesson1.mvp.view.MainView
 import com.mas.lesson1.ui.App
 import com.mas.lesson1.ui.BackButtonListener
-import com.mas.lesson1.ui.adapter.UsersRVAdapter
 import com.mas.lesson1.ui.navigation.AndroidScreens
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -21,7 +19,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     private val presenter by moxyPresenter {
         MainPresenter(App.instance.router, AndroidScreens())
     }
-    private var adapter: UsersRVAdapter? = null
+//    private var adapter: UsersRVAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
