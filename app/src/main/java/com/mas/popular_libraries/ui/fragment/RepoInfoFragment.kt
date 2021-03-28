@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.mas.popular_libraries.databinding.FragmentRepoInfoBinding
-import com.mas.popular_libraries.mvp.model.entity.GithubUserRepos
+import com.mas.popular_libraries.mvp.model.entity.GithubUserRepository
 import com.mas.popular_libraries.mvp.presenter.RepoInfoPresenter
 import com.mas.popular_libraries.mvp.view.RepoInfoView
 import com.mas.popular_libraries.ui.App
@@ -16,7 +16,7 @@ class RepoInfoFragment : MvpAppCompatFragment(), RepoInfoView, BackButtonListene
 
     companion object {
         private const val REPO_ARG = "repo"
-        fun newInstance(repo: GithubUserRepos) = RepoInfoFragment().apply {
+        fun newInstance(repo: GithubUserRepository) = RepoInfoFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(REPO_ARG, repo)
             }
@@ -24,7 +24,7 @@ class RepoInfoFragment : MvpAppCompatFragment(), RepoInfoView, BackButtonListene
     }
 
     private val presenter by moxyPresenter {
-        val repo = arguments?.getParcelable<GithubUserRepos>(REPO_ARG) as GithubUserRepos
+        val repo = arguments?.getParcelable<GithubUserRepository>(REPO_ARG) as GithubUserRepository
         RepoInfoPresenter(
             repo,
             App.instance.router
@@ -49,7 +49,7 @@ class RepoInfoFragment : MvpAppCompatFragment(), RepoInfoView, BackButtonListene
 
     override fun backPressed() = presenter.backClick()
 
-    override fun setRepoInfo(repo: GithubUserRepos) {
+    override fun setRepoInfo(repo: GithubUserRepository) {
         vb?.tvRepoName?.text = repo.name
         vb?.tvDescription?.text = "Description\n${repo.description}"
         vb?.tvHtmlUrl?.text = repo.htmlUrl

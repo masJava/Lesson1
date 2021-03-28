@@ -7,14 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mas.popular_libraries.databinding.FragmentUserInfoBinding
 import com.mas.popular_libraries.mvp.model.api.ApiHolder
 import com.mas.popular_libraries.mvp.model.entity.GithubUser
+import com.mas.popular_libraries.mvp.model.entity.room.db.Database
 import com.mas.popular_libraries.mvp.presenter.UsersInfoPresenter
-import com.mas.popular_libraries.mvp.repo.RetrofitGithubUsersRepo
+import com.mas.popular_libraries.mvp.repo.RetrofitGithubUsersRepositiry
 import com.mas.popular_libraries.mvp.view.UsersInfoView
 import com.mas.popular_libraries.ui.App
 import com.mas.popular_libraries.ui.BackButtonListener
 import com.mas.popular_libraries.ui.adapter.ReposRVAdapter
 import com.mas.popular_libraries.ui.image.GlideImageLoader
 import com.mas.popular_libraries.ui.navigation.AndroidScreens
+import com.mas.popular_libraries.ui.network.AndroidNetworkStatus
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -34,7 +36,11 @@ class UserInfoFragment : MvpAppCompatFragment(), UsersInfoView, BackButtonListen
         val user = arguments?.getParcelable<GithubUser>(USER_ARG) as GithubUser
         UsersInfoPresenter(
             user,
-            RetrofitGithubUsersRepo(ApiHolder.api),
+            RetrofitGithubUsersRepositiry(
+                ApiHolder.api,
+                AndroidNetworkStatus(App.instance),
+                Database.getInstance()
+            ),
             AndroidSchedulers.mainThread(),
             App.instance.router,
             AndroidScreens()

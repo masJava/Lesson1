@@ -2,12 +2,12 @@ package com.mas.popular_libraries.mvp.presenter
 
 import android.util.Log
 import com.github.terrakok.cicerone.Router
-import com.mas.popular_libraries.mvp.model.entity.GithubUserRepos
+import com.mas.popular_libraries.mvp.model.entity.GithubUserRepository
 import com.mas.popular_libraries.mvp.view.RepoInfoView
 import moxy.MvpPresenter
 
 class RepoInfoPresenter(
-    private val repo: GithubUserRepos,
+    private val repo: GithubUserRepository,
     private val router: Router,
 ) :
     MvpPresenter<RepoInfoView>() {

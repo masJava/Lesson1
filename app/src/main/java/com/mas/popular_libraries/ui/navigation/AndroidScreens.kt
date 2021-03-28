@@ -2,7 +2,7 @@ package com.mas.popular_libraries.ui.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.mas.popular_libraries.mvp.model.entity.GithubUser
-import com.mas.popular_libraries.mvp.model.entity.GithubUserRepos
+import com.mas.popular_libraries.mvp.model.entity.GithubUserRepository
 import com.mas.popular_libraries.mvp.navigation.IScreens
 import com.mas.popular_libraries.ui.fragment.RepoInfoFragment
 import com.mas.popular_libraries.ui.fragment.UserInfoFragment
@@ -17,7 +17,7 @@ class AndroidScreens : IScreens {
         UserInfoFragment.newInstance(user)
     }
 
-    override fun repoInfo(repo: GithubUserRepos) = FragmentScreen {
+    override fun repoInfo(repo: GithubUserRepository) = FragmentScreen {
         RepoInfoFragment.newInstance(repo)
     }
 }
