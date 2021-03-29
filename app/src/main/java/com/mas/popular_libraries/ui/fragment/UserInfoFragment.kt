@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mas.popular_libraries.databinding.FragmentUserInfoBinding
 import com.mas.popular_libraries.mvp.model.api.ApiHolder
 import com.mas.popular_libraries.mvp.model.entity.GithubUser
+import com.mas.popular_libraries.mvp.model.entity.room.cache.RoomGithubRepositoryCache
 import com.mas.popular_libraries.mvp.model.entity.room.db.Database
 import com.mas.popular_libraries.mvp.presenter.UsersInfoPresenter
-import com.mas.popular_libraries.mvp.repo.RetrofitGithubUsersRepositiry
+import com.mas.popular_libraries.mvp.repo.RetrofitGithubUsersRepository
 import com.mas.popular_libraries.mvp.view.UsersInfoView
 import com.mas.popular_libraries.ui.App
 import com.mas.popular_libraries.ui.BackButtonListener
@@ -36,10 +37,11 @@ class UserInfoFragment : MvpAppCompatFragment(), UsersInfoView, BackButtonListen
         val user = arguments?.getParcelable<GithubUser>(USER_ARG) as GithubUser
         UsersInfoPresenter(
             user,
-            RetrofitGithubUsersRepositiry(
+            RetrofitGithubUsersRepository(
                 ApiHolder.api,
                 AndroidNetworkStatus(App.instance),
-                Database.getInstance()
+                Database.getInstance(),
+                RoomGithubRepositoryCache()
             ),
             AndroidSchedulers.mainThread(),
             App.instance.router,
