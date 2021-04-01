@@ -15,7 +15,10 @@ class RepoInfoPresenter(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.setRepoInfo(repo)
+        viewState.setName(repo.name)
+        viewState.setDescription("Description\n${repo.description}")
+        viewState.setUrl(repo.htmlUrl)
+        viewState.setForkCount("Fork count: ${repo.forks_count}")
     }
 
     fun backClick(): Boolean {

@@ -49,11 +49,20 @@ class RepoInfoFragment : MvpAppCompatFragment(), RepoInfoView, BackButtonListene
 
     override fun backPressed() = presenter.backClick()
 
-    override fun setRepoInfo(repo: GithubUserRepository) {
-        vb?.tvRepoName?.text = repo.name
-        vb?.tvDescription?.text = "Description\n${repo.description}"
-        vb?.tvHtmlUrl?.text = repo.htmlUrl
-        vb?.tvForkCount?.text = "Fork count: ${repo.forks_count}"
+    override fun setName(name: String) {
+        vb?.tvRepoName?.text = name
+    }
+
+    override fun setDescription(description: String) {
+        vb?.tvDescription?.text = description
+    }
+
+    override fun setUrl(url: String) {
+        vb?.tvHtmlUrl?.text = url
+    }
+
+    override fun setForkCount(forkCount: String) {
+        vb?.tvForkCount?.text = forkCount
     }
 
 }

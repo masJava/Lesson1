@@ -7,5 +7,8 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface RepoInfoView : MvpView {
-    fun setRepoInfo(repo: GithubUserRepository)
+    fun setName(name: String)
+    fun setDescription(description: String)
+    fun setUrl(url: String)
+    fun setForkCount(forkCount: String)
 }
