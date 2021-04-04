@@ -25,10 +25,9 @@ class RepoInfoFragment : MvpAppCompatFragment(), RepoInfoView, BackButtonListene
 
     private val presenter by moxyPresenter {
         val repo = arguments?.getParcelable<GithubUserRepository>(REPO_ARG) as GithubUserRepository
-        RepoInfoPresenter(
-            repo,
-            App.instance.router
-        )
+        RepoInfoPresenter(repo).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     private var vb: FragmentRepoInfoBinding? = null

@@ -1,6 +1,5 @@
 package com.mas.popular_libraries.mvp.view
 
-import com.mas.popular_libraries.mvp.model.entity.GithubUserRepository
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType

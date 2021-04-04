@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
 class RoomGithubRepository(
     @PrimaryKey val id: String,
     val name: String,
-    val description: String,
+    val description: String?,
     val htmlUrl: String,
     val forks_count: Int,
     val userId: String
