@@ -15,7 +15,7 @@ class RoomGithubRepositoryCache : IGithubRepositoryCache {
             RoomGithubRepository(
                 repo.id,
                 repo.name,
-                repo.description ?: "",
+                repo.description,
                 repo.htmlUrl,
                 repo.forks_count,
                 roomUser.id

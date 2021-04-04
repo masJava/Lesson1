@@ -5,13 +5,11 @@ import com.github.terrakok.cicerone.Router
 import com.mas.popular_libraries.mvp.model.entity.GithubUserRepository
 import com.mas.popular_libraries.mvp.view.RepoInfoView
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class RepoInfoPresenter(
-    private val repo: GithubUserRepository,
-    private val router: Router,
-) :
-    MvpPresenter<RepoInfoView>() {
+class RepoInfoPresenter(private val repo: GithubUserRepository) : MvpPresenter<RepoInfoView>() {
 
+    @Inject lateinit var router: Router
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

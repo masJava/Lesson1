@@ -16,7 +16,6 @@ import com.mas.popular_libraries.ui.App
 import com.mas.popular_libraries.ui.BackButtonListener
 import com.mas.popular_libraries.ui.adapter.ReposRVAdapter
 import com.mas.popular_libraries.ui.image.GlideImageLoader
-import com.mas.popular_libraries.ui.navigation.AndroidScreens
 import com.mas.popular_libraries.ui.network.AndroidNetworkStatus
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
@@ -43,10 +42,10 @@ class UserInfoFragment : MvpAppCompatFragment(), UsersInfoView, BackButtonListen
                 Database.getInstance(),
                 RoomGithubRepositoryCache()
             ),
-            AndroidSchedulers.mainThread(),
-            App.instance.router,
-            AndroidScreens()
-        )
+            AndroidSchedulers.mainThread()
+        ).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     private var vb: FragmentUserInfoBinding? = null

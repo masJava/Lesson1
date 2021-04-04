@@ -10,14 +10,14 @@ import com.mas.popular_libraries.mvp.view.UsersView
 import com.mas.popular_libraries.mvp.view.list.IUserItemView
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
 
-class UsersPresenter(
-    private val uiScheduler: Scheduler,
-    private val users: IGithubUsers,
-    private val router: Router,
-    private val screens: IScreens
-) : MvpPresenter<UsersView>() {
+class UsersPresenter(private val uiScheduler: Scheduler) : MvpPresenter<UsersView>() {
+
+    @Inject lateinit var users: IGithubUsers
+    @Inject lateinit var screens: IScreens
+    @Inject lateinit var router: Router
 
     class UsersListPresenter : IUsersListPresenter {
         val users = mutableListOf<GithubUser>()

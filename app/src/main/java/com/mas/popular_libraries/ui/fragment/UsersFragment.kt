@@ -15,7 +15,6 @@ import com.mas.popular_libraries.ui.App
 import com.mas.popular_libraries.ui.BackButtonListener
 import com.mas.popular_libraries.ui.adapter.UsersRVAdapter
 import com.mas.popular_libraries.ui.image.GlideImageLoader
-import com.mas.popular_libraries.ui.navigation.AndroidScreens
 import com.mas.popular_libraries.ui.network.AndroidNetworkStatus
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
@@ -30,15 +29,14 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val presenter by moxyPresenter {
         UsersPresenter(
             AndroidSchedulers.mainThread(),
-            RetrofitGithubUsers(
-                ApiHolder.api,
-                AndroidNetworkStatus(App.instance),
-                Database.getInstance(),
-                RoomGithubUsersCache()
-            ),
-            App.instance.router,
-            AndroidScreens()
-        )
+//            RetrofitGithubUsers(
+//                ApiHolder.api,
+//                AndroidNetworkStatus(App.instance),
+//                RoomGithubUsersCache(Database.getInstance())
+//            )
+        ).apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     private var vb: FragmentUsersBinding? = null
