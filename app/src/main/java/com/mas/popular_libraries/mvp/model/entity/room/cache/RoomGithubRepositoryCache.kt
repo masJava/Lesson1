@@ -1,17 +1,18 @@
 package com.mas.popular_libraries.mvp.model.entity.room.cache
 
+import com.mas.popular_libraries.mvp.model.entity.GithubUser
 import com.mas.popular_libraries.mvp.model.entity.GithubUserRepository
 import com.mas.popular_libraries.mvp.model.entity.room.RoomGithubRepository
-import com.mas.popular_libraries.mvp.model.entity.room.RoomGithubUser
 import com.mas.popular_libraries.mvp.model.entity.room.db.Database
 
-class RoomGithubRepositoryCache : IGithubRepositoryCache {
+class RoomGithubRepositoryCache(val db: Database) : IGithubRepositoryCache {
     override fun insert(
-        db: Database,
         repositories: List<GithubUserRepository>,
-        roomUser: RoomGithubUser
+        user: GithubUser
     ) {
         val roomRepos = repositories.map { repo ->
+            val roomUser = db.userDao.findByLogin(user.login)
+                ?: throw RuntimeException("Нет пользователя в БД")
             RoomGithubRepository(
                 repo.id,
                 repo.name,
@@ -24,8 +25,10 @@ class RoomGithubRepositoryCache : IGithubRepositoryCache {
         db.repositoryDao.insert(roomRepos)
     }
 
-    override fun getByUser(db: Database, user: RoomGithubUser): List<GithubUserRepository> {
-        return db.repositoryDao.findByUser(user.id).map { roomRepo ->
+    override fun getByUser(user: GithubUser): List<GithubUserRepository> {
+        val roomUser = db.userDao.findByLogin(user.login)
+            ?: throw RuntimeException("Нет пользователя в БД")
+        return db.repositoryDao.findByUser(roomUser.id).map { roomRepo ->
             GithubUserRepository(
                 roomRepo.id,
                 roomRepo.name,

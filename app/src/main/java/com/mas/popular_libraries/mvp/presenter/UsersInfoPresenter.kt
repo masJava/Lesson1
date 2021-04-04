@@ -12,16 +12,20 @@ import com.mas.popular_libraries.mvp.view.list.IRepoItemView
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
+import javax.inject.Named
 
-class UsersInfoPresenter(
-    private val user: GithubUser,
-    private val repos: IGithubUsersRepo,
-    private val uiScheduler: Scheduler
-) :
+class UsersInfoPresenter(private val user: GithubUser) :
     MvpPresenter<UsersInfoView>() {
 
-    @Inject lateinit var router: Router
-    @Inject lateinit var screens: IScreens
+    @Inject
+    lateinit var router: Router
+    @Inject
+    lateinit var screens: IScreens
+    @Inject
+    lateinit var repos: IGithubUsersRepo
+    @field:Named("mainThread")
+    @Inject
+    lateinit var uiScheduler: Scheduler
 
     class ReposListPresenter : IRepoListPresenter {
         val repos = mutableListOf<GithubUserRepository>()

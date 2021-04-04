@@ -9,9 +9,12 @@ import com.mas.popular_libraries.ui.App
 import com.mas.popular_libraries.ui.network.AndroidNetworkStatus
 import dagger.Module
 import dagger.Provides
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -26,14 +29,18 @@ class ApiModule {
     @Singleton
     @Provides
     fun api(gson: Gson): IDataSource = Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(IDataSource::class.java)
+        .baseUrl("https://api.github.com/")
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build()
+        .create(IDataSource::class.java)
 
     @Singleton
     @Provides
     fun networkStatus(app: App): INetworkStatus = AndroidNetworkStatus(app)
+
+    @Named("mainThread")
+    @Provides
+    fun uiScheduler(): Scheduler = AndroidSchedulers.mainThread()
 
 }

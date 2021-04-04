@@ -16,7 +16,8 @@ import javax.inject.Singleton
         AppModule::class,
         CacheModule::class,
         CiceroneModule::class,
-        RepoModule::class
+        RepoModule::class,
+        UserRepositoryModule::class
     ]
 )
 
