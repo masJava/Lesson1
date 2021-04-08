@@ -5,7 +5,8 @@ import com.google.gson.annotations.Expose
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class GithubUserRepos(
+data class GithubUserRepository(
+    @Expose val id: String,
     @Expose val name: String,
     @Expose val description: String,
     @Expose val htmlUrl: String,

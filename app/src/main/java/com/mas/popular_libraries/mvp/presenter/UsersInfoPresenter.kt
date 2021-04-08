@@ -3,7 +3,7 @@ package com.mas.popular_libraries.mvp.presenter
 import android.util.Log
 import com.github.terrakok.cicerone.Router
 import com.mas.popular_libraries.mvp.model.entity.GithubUser
-import com.mas.popular_libraries.mvp.model.entity.GithubUserRepos
+import com.mas.popular_libraries.mvp.model.entity.GithubUserRepository
 import com.mas.popular_libraries.mvp.navigation.IScreens
 import com.mas.popular_libraries.mvp.presenter.list.IRepoListPresenter
 import com.mas.popular_libraries.mvp.repo.IGithubUsersRepo
@@ -22,7 +22,7 @@ class UsersInfoPresenter(
     MvpPresenter<UsersInfoView>() {
 
     class ReposListPresenter : IRepoListPresenter {
-        val repos = mutableListOf<GithubUserRepos>()
+        val repos = mutableListOf<GithubUserRepository>()
         override var itemClickListener: ((IRepoItemView) -> Unit)? = null
 
         override fun bindView(view: IRepoItemView) {
@@ -41,7 +41,7 @@ class UsersInfoPresenter(
         viewState.setLogin(user.login)
         viewState.setAvatar(user.avatarUrl)
         viewState.init()
-        loadData(user.reposUrl)
+        loadData(user)
 
         reposListPresenter.itemClickListener = { view ->
             val repo = reposListPresenter.repos[view.pos]
@@ -54,9 +54,9 @@ class UsersInfoPresenter(
         }
     }
 
-    private fun loadData(url: String) {
+    private fun loadData(user: GithubUser) {
 
-        repos.getUsersRepos(url)
+        repos.getUsersRepository(user)
             .observeOn(uiScheduler)
             .subscribe(
                 { repos ->
