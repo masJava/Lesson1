@@ -1,6 +1,7 @@
 package com.mas.lesson1.mvp.model
 
 import com.mas.lesson1.mvp.model.entity.GithubUser
+import io.reactivex.rxjava3.core.Observable
 
 class GithubUsersRepo {
     private val users = listOf(
@@ -19,10 +20,6 @@ class GithubUsersRepo {
         GithubUser("User13"),
         GithubUser("User14"),
     )
-//
-//    fun getUsers(): List<GithubUser> {
-//        return users
-//    }
 
-    fun getUsers() = users
+    fun getUsers(): Observable<List<GithubUser>> = Observable.just(users)
 }

@@ -44,13 +44,15 @@ class UsersPresenter(
 
     private fun loadData() {
         usersListPresenter.users.clear()
-        usersListPresenter.users.addAll(usersRepo.getUsers())
+        usersRepo.getUsers().subscribe(
+            { users -> usersListPresenter.users.addAll(users) },
+            { t -> Log.d("my", t.message.toString()) },
+            { Log.d("my", "Complete") })
         viewState.updateList()
     }
 
     fun backClick(): Boolean {
         router.exit()
-        Log.d("my", "backUser")
         return true
     }
 
